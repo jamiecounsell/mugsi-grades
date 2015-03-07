@@ -85,7 +85,7 @@ def calculateGrades(grades):
 			units = units + grade_unit
 		except Exception:
 			if DEBUG:
-				"Found bad entry: "print grade
+				"Found bad entry: "+ print grade
 			else:
 				pass
 		try:
@@ -108,7 +108,7 @@ def calculateGrades(grades):
 				units = units + grade_unit
 			except Exception:
 				if DEBUG:
-					"Found bad entry: "print grade
+					"Found bad entry: "+ print grade
 				else:
 					pass
 		if 'term_grades' not in gradedict:
