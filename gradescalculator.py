@@ -7,6 +7,7 @@ except ImportError:
 	print "Error: mechanize not found."
 	sys.exit(0)
 
+DEBUG = False
 MACID = 'YOUR_MACID'
 PASSWORD = 'YOUR_PASSWORD'
 
@@ -77,12 +78,15 @@ def calculateGrades(grades):
 	units = 0.0
 	weightedgrades = 0.0
 	for grade in grades:
-		grade_unit = int(grade[3])
 		try:
+			grade_unit = int(grade[3])
 			weightedgrades = weightedgrades + grade_unit * GRADE_VALUES[grade[4]]
 			units = units + grade_unit
-		except KeyError:
-			pass
+		except Exception:
+			if DEBUG:
+				"Found bad entry: "print grade
+			else:
+				pass
 		try:
 			if grade[5] not in gradedict['term']:
 				gradedict['term'][grade[5]] = []
@@ -102,7 +106,10 @@ def calculateGrades(grades):
 				weightedgrades = weightedgrades + grade_unit * GRADE_VALUES[grade[4]]
 				units = units + grade_unit
 			except Exception:
-				"Found bad entry: "print grade
+				if DEBUG:
+					"Found bad entry: "print grade
+				else:
+					pass
 		if 'term_grades' not in gradedict:
 			gradedict['term_grades'] = {}
 		try:
