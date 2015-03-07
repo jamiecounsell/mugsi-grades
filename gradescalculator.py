@@ -7,7 +7,7 @@ except ImportError:
 	print "Error: mechanize not found."
 	sys.exit(0)
 
-MACID = 'YOUR_MAC_ID'
+MACID = 'YOUR_MACID'
 PASSWORD = 'YOUR_PASSWORD'
 
 GRADE_VALUES = {
@@ -119,7 +119,9 @@ def main():
 	gradedict = calculateGrades(webDATA)
 	print "TERM     | GRADE"
 	print "-------------------"
-	for term in gradedict['term_grades'].keys():
+	keys = gradedict['term_grades'].keys()
+	keys.sort(key=lambda x: [int(y) for y in x.split('/')[1]])
+	for term in keys:
 		print "%s: | %.2f" % (term, round(float(gradedict['term_grades'][term]),2))
 	print     "Total:   | %.2f" % (round(gradedict['total'],2),)
 
