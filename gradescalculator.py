@@ -97,12 +97,12 @@ def calculateGrades(grades):
 		term_grades 	= gradedict['term'][term]
 
 		for grade in term_grades:
-			grade_unit = int(grade[3])
 			try:
 				weightedgrades = weightedgrades + grade_unit * GRADE_VALUES[grade[4]]
 				units = units + grade_unit
+				grade_unit = int(grade[3])
 			except KeyError:
-				pass
+				"Found bad entry: "print grade
 		if 'term_grades' not in gradedict:
 			gradedict['term_grades'] = {}
 		try:
