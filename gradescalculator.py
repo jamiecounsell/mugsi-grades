@@ -28,6 +28,7 @@ GRADE_VALUES = {
 }
 
 def loginToBrowser():
+	global DEBUG
 	print "Getting your grades. Please wait... \n\n",
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
