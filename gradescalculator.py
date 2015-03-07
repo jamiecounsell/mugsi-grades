@@ -74,6 +74,7 @@ def getGradesFromResponse(response):
 		return
 
 def calculateGrades(grades):
+	global DEBUG
 	gradedict = {}
 	gradedict['term'] = {}
 	units = 0.0
