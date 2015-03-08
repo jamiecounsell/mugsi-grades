@@ -9,10 +9,7 @@ I know they're shutting down MUGSI this year, but I was getting frustrated with 
 
 ###How to use it
 To use the grade calculator, simply checkout the repository or download the .zip from GitHub. Once you've got it, open `gradescalculator.py` and modify the following lines with correct information.   
-```
-
-
-```   
+  
 I've bundled Mechanize, but you can choose to download and install it for the latest version (though it may not work).
 
 Then, simply run the program
