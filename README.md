@@ -10,8 +10,8 @@ I know they're shutting down MUGSI this year, but I was getting frustrated with 
 ###How to use it
 To use the grade calculator, simply checkout the repository or download the .zip from GitHub. Once you've got it, open `gradescalculator.py` and modify the following lines with correct information.   
 ```
-MACID = 'YOUR_MAC_ID'
-PASSWORD = 'YOUR_PASSWORD'
+
+
 ```   
 I've bundled Mechanize, but you can choose to download and install it for the latest version (though it may not work).
 
@@ -20,6 +20,6 @@ Then, simply run the program
 ```
 $ python gradescalculator.py
 ```
-
+After you run the program it will prompt you for the username and password
 ###Future Updates
 I might clean this up a bit, but since Mosaic is coming soon, the process would be vastly different. Once Mosaic is integrated, I will look for a way to continue this. Hopefully we don't need it, and Mosaic is reliable enough to meet the needs of the students.
