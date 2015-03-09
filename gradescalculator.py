@@ -51,7 +51,7 @@ def loginToBrowser(username, password):
 		browser.submit()
 	except:
 		print "Incorrect credentials or connection to MUGSI might be the problem. Exiting program"
-		sys.exit()
+		sys.exit(0)
 	response = browser.response().read()
 	if browser.response().code == 200:
 		cleaned_grades = getGradesFromResponse(response)
@@ -133,7 +133,7 @@ def main():
 		MACID = raw_input("Enter your username: ")
 		PASSWORD = getpass.getpass("Please enter your password: ")
 		if not MACID and not PASSWORD:
-			print "Please enter correct credentials."
+			print "Please enter correct credentials.\n"
 	else:
 		webDATA = loginToBrowser(MACID,PASSWORD)
 		gradedict = calculateGrades(webDATA)
