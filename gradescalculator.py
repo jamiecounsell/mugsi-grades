@@ -89,7 +89,7 @@ def calculateGrades(grades):
 			units = units + grade_unit
 		except Exception:
 			if DEBUG:
-				print "Found bad entry: "+  grade
+				print "Found bad entry: " + str(grade)
 			else:
 				pass
 		try:
@@ -112,7 +112,7 @@ def calculateGrades(grades):
 				units = units + grade_unit
 			except Exception:
 				if DEBUG:
-					print "Found bad entry: "+  grade
+					print "Found bad entry: " + str(grade)
 				else:
 					pass
 		if 'term_grades' not in gradedict:
@@ -126,11 +126,14 @@ def calculateGrades(grades):
 	return gradedict
 
 def main():
-	print "BetterMUGSI Grade Calculator V1.0"
-	MACID = raw_input("Enter your username: ")
-	PASSWORD = getpass.getpass("Please enter your password: ")
-	if not MACID and not PASSWORD:
-		print "Please enter correct credentials. Program exiting"
+	print "BetterMUGSI Grade Calculator V2.0"
+	MACID = ""
+	PASSWORD = ""
+	while (not MACID) or (not PASSWORD):
+		MACID = raw_input("Enter your username: ")
+		PASSWORD = getpass.getpass("Please enter your password: ")
+		if not MACID and not PASSWORD:
+			print "Please enter correct credentials."
 	else:
 		webDATA = loginToBrowser(MACID,PASSWORD)
 		gradedict = calculateGrades(webDATA)
