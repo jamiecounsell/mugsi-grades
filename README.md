@@ -17,6 +17,6 @@ Then, simply run the program
 ```
 $ python gradescalculator.py
 ```
-After you run the program it will prompt you for the username and password
+After you run the program, you will be prompted to enter your MUGSI credentials.
 ###Future Updates
 I might clean this up a bit, but since Mosaic is coming soon, the process would be vastly different. Once Mosaic is integrated, I will look for a way to continue this. Hopefully we don't need it, and Mosaic is reliable enough to meet the needs of the students.
