@@ -1,5 +1,6 @@
 from pprint import pprint
 import sys
+import getpass
 
 try:
 	import mechanize
@@ -8,8 +9,6 @@ except ImportError:
 	sys.exit(0)
 
 DEBUG = False
-MACID = 'YOUR_MACID'
-PASSWORD = 'YOUR_PASSWORD'
 
 GRADE_VALUES = {
 	"A+":	12,
@@ -27,28 +26,32 @@ GRADE_VALUES = {
 	"F":	0,
 }
 
-def loginToBrowser():
+def loginToBrowser(username, password):
 	global DEBUG
 	print "Getting your grades. Please wait... \n\n",
 	browser = mechanize.Browser()
 	browser.set_handle_robots(False)
 	browser.open("https://adweb.cis.mcmaster.ca/cis/ahtml/login.htm")
 	browser.select_form(nr = 0)
-	browser.form['credential_0'] = MACID
-	browser.form['credential_1'] = PASSWORD
+	browser.form['credential_0'] = username
+	browser.form['credential_1'] = password
 	browser.submit()
 	browser.open("https://adweb.cis.mcmaster.ca/mugsi/fp")
-	browser.select_form(name="myform")
-	browser.submit()
-	browser._factory.is_html = True
-	browser.select_form(name="P002")
-	browser.submit()
-	browser._factory.is_html = True
-	browser.select_form(name="Q004")
-	browser.submit()
-	browser._factory.is_html = True
-	browser.select_form(name="DEGAUD")
-	browser.submit()
+	try:
+		browser.select_form(name="myform")
+		browser.submit()
+		browser._factory.is_html = True
+		browser.select_form(name="P002")
+		browser.submit()
+		browser._factory.is_html = True
+		browser.select_form(name="Q004")
+		browser.submit()
+		browser._factory.is_html = True
+		browser.select_form(name="DEGAUD")
+		browser.submit()
+	except:
+		print "Incorrect credentials or connection to MUGSI might be the problem. Exiting program"
+		sys.exit(0)
 	response = browser.response().read()
 	if browser.response().code == 200:
 		cleaned_grades = getGradesFromResponse(response)
@@ -86,7 +89,7 @@ def calculateGrades(grades):
 			units = units + grade_unit
 		except Exception:
 			if DEBUG:
-				print "Found bad entry: "+  str(grade)
+				print "Found bad entry: " + str(grade)
 			else:
 				pass
 		try:
@@ -109,7 +112,7 @@ def calculateGrades(grades):
 				units = units + grade_unit
 			except Exception:
 				if DEBUG:
-					print "Found bad entry: "+  str(grade)
+					print "Found bad entry: " + str(grade)
 				else:
 					pass
 		if 'term_grades' not in gradedict:
@@ -123,15 +126,23 @@ def calculateGrades(grades):
 	return gradedict
 
 def main():
-	print "BetterMUGSI Grade Calculator V1.0"
-	webDATA = loginToBrowser()
-	gradedict = calculateGrades(webDATA)
-	print "TERM     | GRADE"
-	print "-------------------"
-	keys = gradedict['term_grades'].keys()
-	keys.sort(key=lambda x: [int(y) for y in x.split('/')[1]])
-	for term in keys:
-		print "%s: | %.2f" % (term, round(float(gradedict['term_grades'][term]),2))
-	print     "Total:   | %.2f" % (round(gradedict['total'],2),)
+	print "BetterMUGSI Grade Calculator V2.0"
+	MACID = ""
+	PASSWORD = ""
+	while (not MACID) or (not PASSWORD):
+		MACID = raw_input("Enter your username: ")
+		PASSWORD = getpass.getpass("Please enter your password: ")
+		if not MACID and not PASSWORD:
+			print "Please enter correct credentials.\n"
+	else:
+		webDATA = loginToBrowser(MACID,PASSWORD)
+		gradedict = calculateGrades(webDATA)
+		print "TERM     | GRADE"
+		print "-------------------"
+		keys = gradedict['term_grades'].keys()
+		keys.sort(key=lambda x: [int(y) for y in x.split('/')[1]])
+		for term in keys:
+			print "%s: | %.2f" % (term, round(float(gradedict['term_grades'][term]),2))
+		print     "Total:   | %.2f" % (round(gradedict['total'],2),)
 
 main()
